@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Hello from '@/components/Hello';
+import Contact from '@/components/contact/contact';
+import Home from '@/components/home/home';
+import Group from '@/components/group/group';
 
 Vue.use(Router);
 
@@ -8,8 +10,22 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello,
+      redirect: '/home',
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home,
+    },
+    {
+      path: '/group',
+      name: 'Group',
+      component: Group,
+    },
+    {
+      path: '/Contact',
+      name: 'Contact',
+      component: Contact,
     },
   ],
 });
