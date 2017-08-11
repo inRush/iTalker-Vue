@@ -1,5 +1,5 @@
 <template>
-  <div class="float-wrapper" :style='style'>
+  <div class="float-wrapper" :style='style' @click="click">
     <i class="fa" :class="getIcon(icon)"></i>
   </div>
 </template>
@@ -29,6 +29,9 @@ export default {
   methods: {
     getIcon(icon) {
       return `fa-${icon}`;
+    },
+    click() {
+      this.$emit('click');
     },
   },
 };
