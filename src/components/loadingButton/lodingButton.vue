@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-button-wrapper">
+  <div class="loading-button-wrapper" @click="buttonClick()">
     <div class="button-main">{{text}}</div>
     <div class="loading-view"></div>
   </div>
@@ -11,6 +11,17 @@ export default {
   props: {
     text: {
       type: String,
+    },
+  },
+  methods: {
+    buttonClick(event) {
+      this.$emit('click', event);
+    },
+    startLoading() {
+
+    },
+    stopLoading() {
+
     },
   },
 };

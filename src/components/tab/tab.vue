@@ -1,8 +1,8 @@
 <template>
   <div class="tab" :class="getPosition()">
-    <router-link tag="div" :to="tab.target" v-for="tab in tabs" :key="tab.title" class="tab-item" @click.native="tabClick(tab.title)">
+    <router-link ref="router" active-class="active" tag="div" :to="tab.target" v-for="(tab,index) in tabs" :key="tab.title" class="tab-item" @click.native="tabClick(index)">
       <div class="icon">
-        <i class="fa" :class="icon(tab.icon)"></i>
+        <i class="fa" :class="getIcon(tab.icon)"></i>
       </div>
       <div class="title">{{tab.title}}</div>
     </router-link>
@@ -10,19 +10,20 @@
 </template>
 
 <script>
+// import Store from 'common/js/store';
+
 export default {
   props: {
     tabs: {
-      type: Array,
+      type: Object,
     },
     position: {
       type: String,
       default: 'bottom',
     },
   },
-
   methods: {
-    icon(icon) {
+    getIcon(icon) {
       return 'fa-'.concat(icon);
     },
     getPosition() {
@@ -31,8 +32,8 @@ export default {
       }
       return 'bottom';
     },
-    tabClick(title) {
-      this.$emit('tabClick', title);
+    tabClick(key) {
+      this.$emit('tabClick', key);
     },
   },
 };
@@ -76,7 +77,7 @@ export default {
       font-size: $font-size-large;
       color: $color-text-second;
     }
-    &.router-link-active {
+    &.active {
       .title {
         color: $color-text-primary;
         transform: scale(1);

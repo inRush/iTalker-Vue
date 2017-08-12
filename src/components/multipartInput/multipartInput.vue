@@ -5,7 +5,7 @@
         <i class="fa" :class="getIcon(input.icon)"></i>
       </div>
       <div class="input">
-        <input @input='handleInput' :data-key='input.key' :type="input.type" @focus="handleFocus(index)">
+        <input ref="inputs" @input='handleInput' :data-key='input.key' :type="input.type" @focus="handleFocus(index)">
         <span class="hint" :class="{'active':currentIndex === index || haveContent(input.key)}">{{input.hint}}</span>
       </div>
       <div v-show="index != 0" class="split"></div>
@@ -32,17 +32,28 @@ export default {
       const key = event.target.getAttribute('data-key');
       const value = event.target.value;
       this.$emit('inputChange', key, value);
-      this[`_content_${key}`] = value;
+      this.inputValue[key] = value;
     },
     haveContent(key) {
-      const content = this[`_content_${key}`];
+      const content = this.inputValue[key];
       return content && content !== '';
     },
   },
   data() {
     return {
       currentIndex: -1,
+      inputValue: {},
     };
+  },
+  watch: {
+    inputs() {
+      const inputs = this.$refs.inputs;
+      inputs[0].focus();
+      for (let i = 0; i < inputs.length; i += 1) {
+        inputs[i].value = null;
+      }
+      this.inputValue = {};
+    },
   },
 };
 </script>

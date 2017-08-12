@@ -1,13 +1,13 @@
 <template>
-  <div class="login-wrapper">
+  <div class="account-wrapper">
     <mask-image :isBg="true" :image="background" :opacity="0.5" :isMask="true"></mask-image>
     <div class="content">
       <div class="title">{{title}}</div>
-      <multipart-input :inputs="inputs" class="message-input"></multipart-input>
-      <div class="go-register">
-        <a>{{link}}</a>
+      <multipart-input @inputChange="inputChange" :inputs="inputs" class="message-input"></multipart-input>
+      <div class="go-register" @click="link.callback">
+        <a>{{link.text}}</a>
       </div>
-      <loading-button text='登录' class="submit"></loading-button>
+      <loading-button :text='loadingButton.text' class="submit" @click="loadingButtonClick"></loading-button>
     </div>
   
   </div>
@@ -28,19 +28,36 @@ export default {
       type: Array,
     },
     link: {
-      type: String,
+      type: Object,
     },
     background: {
       type: String,
     },
-    logingButton: {
+    loadingButton: {
       type: Object,
+    },
+    pagekey: {
+      type: String,
+    },
+  },
+  methods: {
+    inputChange(k, v) {
+      this.inputValue[`${this.pagekey}_${k}`] = v;
+    },
+    loadingButtonClick() {
+      this.loadingButton.callback(this.inputValue);
     },
   },
   data() {
     return {
       bgColor: '#1572fc',
+      inputValue: {},
     };
+  },
+  watch: {
+    inputs() {
+      this.inputValue = {};
+    },
   },
   components: {
     MultipartInput,
@@ -53,7 +70,7 @@ export default {
 <style lang="scss" rel="stylesheet/scss">
 @import '../../common/scss/variables.scss';
 
-.login-wrapper {
+.account-wrapper {
   .content {
     position: absolute;
     width: 100%;

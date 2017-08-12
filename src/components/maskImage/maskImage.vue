@@ -7,7 +7,7 @@
 
 
 <script>
-import Color from '../../utils/color';
+import Color from 'common/js/color';
 
 export default {
   props: {

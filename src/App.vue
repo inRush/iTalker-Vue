@@ -4,9 +4,9 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <float-button @click="floatButtonClick()" class="float-button" :class="{'show':!isHide,'switch':isSwitch}"></float-button>
-    <tab :tabs="tabs" @tabClick="tabClick"></tab>
-    <account-page class="account" :link="accountLink" :title="accountTitle" :inputs="inputs" v-show="showFlag" :background="accountBg"></account-page>
+    <float-button @click="floatButtonClick" class="float-button" :class="{'show':!isHide,'switch':isSwitch}"></float-button>
+    <tab :tabs="tabs" @tabClick="tabClick" ref="tabs"></tab>
+    <account-page class="account" :loading-button="accountPage.button" :pagekey="accountPage.pagekey" :link="accountPage.link" :title="accountPage.title" :inputs="accountPage.inputs" v-show="showFlag" :background="accountPage.bg"></account-page>
   </div>
 </template>
 
@@ -15,59 +15,78 @@ import Tab from 'components/tab/tab';
 import mHeader from 'components/header/header';
 import FloatButton from 'components/floatButton/floatButton';
 import AccountPage from 'components/accountPage/accountPage';
-import Img from 'common/img/img';
-import Lang from './lang/lang';
+import Img from 'common/js/img';
+import View from 'common/js/view';
+import Lang from 'lang/lang';
 
 export default {
   name: 'app',
+  created() {
+    this.accountPage = this.loginPage;
+    this.currentTab = this.tabs.home.key;
+  },
   data() {
     return {
-      tabs: [
-        {
-          target: '/home',
-          icon: 'home',
-          title: 'Home',
-        },
-        {
-          target: '/group',
-          icon: 'group',
-          title: 'Group',
-        },
-        {
-          target: '/contact',
-          icon: 'id-card-o',
-          title: 'Contact',
-        },
-      ],
-      inputs: [
-        {
-          key: 'phone',
-          icon: 'phone',
-          hint: '电话',
-          type: 'phone',
-        },
-        {
-          key: 'password',
-          icon: 'key',
-          hint: '密码',
-          type: 'password',
-        },
-      ],
-      title: Lang.homeTitle,
+      tabs: View.app.tabs,
+      title: Lang.homePage.title,
       showFlag: false,
       portrait: Img.portrait,
       headerBg: Img.headerBg,
-      accountBg: Img.accountBg,
-      accountTitle: Lang.accountTitle,
-      accountLink: Lang.accountLink,
+      loginPage: {
+        pagekey: 'login',
+        bg: Img.accountBg,
+        title: Lang.accountPage.login.title,
+        inputs: View.loginPage.inputs,
+        button: {
+          text: Lang.accountPage.login.loadingButton,
+          callback: this.login,
+        },
+        link: {
+          text: Lang.accountPage.login.link,
+          callback: this.accountPageSwitch,
+        },
+      },
+      registerPage: {
+        pagekey: 'register',
+        bg: Img.accountBg,
+        title: Lang.accountPage.register.title,
+        inputs: View.registerPage.inputs,
+        button: {
+          text: Lang.accountPage.register.loadingButton,
+          callback: this.register,
+        },
+        link: {
+          text: Lang.accountPage.register.link,
+          callback: this.accountPageSwitch,
+        },
+      },
+      accountPage: {},
+      currentAccountPage: 'login',
+      currentTab: '',
     };
   },
   methods: {
-    tabClick(title) {
-      this.title = title;
+    tabClick(key) {
+      this.title = this.tabs[key].title;
+      this.currentTab = key;
     },
     floatButtonClick() {
       this.showFlag = true;
+    },
+    accountPageSwitch() {
+      if (this.currentAccountPage === 'login') {
+        this.accountPage = this.registerPage;
+        this.currentAccountPage = 'register';
+      } else if (this.currentAccountPage === 'register') {
+        this.accountPage = this.loginPage;
+        this.currentAccountPage = 'login';
+      }
+    },
+    login(inputValue) {
+      console.log(inputValue);
+    },
+    register(inputValue) {
+      console.log(inputValue);
     },
   },
   computed: {
