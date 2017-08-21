@@ -1,23 +1,22 @@
 <template>
   <div class="account-wrapper">
-    <mask-image :isBg="true" :image="background" :opacity="0.5" :isMask="true"></mask-image>
+    <mask-bg :image="background" :mask-opacity="0.5"></mask-bg>
     <div class="content">
       <div class="title">{{title}}</div>
       <multipart-input @inputChange="inputChange" :inputs="inputs" class="message-input"></multipart-input>
       <div class="go-register" @click="link.callback">
         <a>{{link.text}}</a>
       </div>
-      <loading-button :text='loadingButton.text' class="submit" @click="loadingButtonClick"></loading-button>
+      <loading-button ref="loadingBtn" :text='loadingButton.text' class="submit" @click="loadingButtonClick"></loading-button>
     </div>
-  
   </div>
 </template>
 
 
 <script>
-import MultipartInput from 'components/multipartInput/multipartInput';
-import LoadingButton from 'components/loadingButton/lodingButton';
-import MaskImage from 'components/maskImage/maskImage';
+import MultipartInput from 'components/multipartInput';
+import LoadingButton from 'components/lodingButton';
+import MaskBg from 'components/maskBg';
 
 export default {
   props: {
@@ -36,16 +35,16 @@ export default {
     loadingButton: {
       type: Object,
     },
-    pagekey: {
-      type: String,
-    },
   },
   methods: {
     inputChange(k, v) {
-      this.inputValue[`${this.pagekey}_${k}`] = v;
+      this.inputValue[k] = v;
     },
     loadingButtonClick() {
-      this.loadingButton.callback(this.inputValue);
+      this.$refs.loadingBtn.startLoading();
+      this.loadingButton.callback(this.inputValue, () => {
+        this.$refs.loadingBtn.stopLoading();
+      });
     },
   },
   data() {
@@ -54,23 +53,24 @@ export default {
       inputValue: {},
     };
   },
-  watch: {
-    inputs() {
-      this.inputValue = {};
-    },
-  },
   components: {
     MultipartInput,
     LoadingButton,
-    MaskImage,
+    MaskBg,
   },
 };
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-@import '../../common/scss/variables.scss';
+@import '../common/scss/variables.scss';
 
 .account-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
   .content {
     position: absolute;
     width: 100%;
@@ -94,8 +94,7 @@ export default {
       font-size: $font-size-medium;
     }
     .submit {
-      position: absolute;
-      bottom: 0;
+      position: fixed;
       left: 50%;
       bottom: 20px;
       margin-left: -($loading-button-width / 2);

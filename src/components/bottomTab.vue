@@ -1,8 +1,8 @@
 <template>
-  <div class="tab" :class="getPosition()">
+  <div class="tab">
     <router-link ref="router" active-class="active" tag="div" :to="tab.target" v-for="(tab,index) in tabs" :key="tab.title" class="tab-item" @click.native="tabClick(index)">
       <div class="icon">
-        <i class="fa" :class="getIcon(tab.icon)"></i>
+        <i class="fa" :class="tab.icon"></i>
       </div>
       <div class="title">{{tab.title}}</div>
     </router-link>
@@ -23,35 +23,19 @@ export default {
     },
   },
   methods: {
-    getIcon(icon) {
-      return 'fa-'.concat(icon);
-    },
-    getPosition() {
-      if (this.position === 'top') {
-        return 'top';
-      }
-      return 'bottom';
-    },
     tabClick(key) {
-      this.$emit('tabClick', key);
+      this.$emit('select', key);
     },
   },
 };
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-@import '../../common/scss/variables.scss';
-.bottom {
-  bottom: 0;
-  left: 0;
-}
-
-.top {
-  top: 0;
-  left: 0;
-}
+@import '../common/scss/variables.scss';
 
 .tab {
+  bottom: 0;
+  left: 0;
   display: flex;
   position: absolute;
   width: 100%;

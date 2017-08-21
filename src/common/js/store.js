@@ -26,16 +26,20 @@ export function loadFromLocal(id, key, def) {
   return ret || def;
 }
 
-export function saveUser(user) {
+export function saveToken(token) {
   let italker = window.localStorage.__italker__;
   if (!italker) {
     italker = {};
+  } else {
+    italker = JSON.parse(italker);
   }
-  italker.user = user;
+  italker.user = token;
   window.localStorage.__italker__ = JSON.stringify(italker);
 }
 
-export function loadUser() {
-  const italker = window.localStorage.__italker__;
+export function loadToken() {
+  let italker = window.localStorage.__italker__;
+  if (!italker) return null;
+  italker = JSON.parse(italker);
   return italker.user;
 }

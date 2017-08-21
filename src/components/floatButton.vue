@@ -1,6 +1,6 @@
 <template>
   <div class="float-wrapper" :style='style' @click="click">
-    <i class="fa" :class="getIcon(icon)"></i>
+    <i class="fa" :class="icon"></i>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   props: {
     icon: {
       type: String,
-      default: 'group',
+      default: 'fa-group',
     },
     size: {
       type: Number,
@@ -27,9 +27,6 @@ export default {
     };
   },
   methods: {
-    getIcon(icon) {
-      return `fa-${icon}`;
-    },
     click() {
       this.$emit('click');
     },
@@ -38,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-@import '../../common/scss/variables.scss';
+@import '../common/scss/variables.scss';
 
 .float-wrapper {
   border-radius: 50%;

@@ -2,7 +2,7 @@
   <div class="multipart-input-wrapper">
     <div class="input-item" v-for="(input,index) in inputs" :key="input.hint">
       <div class="icon">
-        <i class="fa" :class="getIcon(input.icon)"></i>
+        <i class="fa" :class="input.icon"></i>
       </div>
       <div class="input">
         <input ref="inputs" @input='handleInput' :data-key='input.key' :type="input.type" @focus="handleFocus(index)">
@@ -22,9 +22,6 @@ export default {
     },
   },
   methods: {
-    getIcon(icon) {
-      return `fa-${icon}`;
-    },
     handleFocus(index) {
       this.currentIndex = index;
     },
@@ -59,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-@import '../../common/scss/variables.scss';
+@import '../common/scss/variables.scss';
 
 .multipart-input-wrapper {
   border-radius: 3px;

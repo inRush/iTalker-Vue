@@ -1,8 +1,8 @@
 export default {
-  user: 'user',
-  key: 'key',
-  phone: 'phone',
-  home: 'home',
-  group: 'group',
-  idCard: 'id-card-o',
+  user: 'fa-user',
+  key: 'fa-key',
+  phone: 'fa-phone',
+  home: 'fa-home',
+  group: 'fa-group',
+  idCard: 'fa-id-card-o',
 };

@@ -45,5 +45,9 @@ module.exports = {
     'no-restricted-syntax': 0,
     'no-underscore-dangle': 0,
     'import/prefer-default-export': 0,
+    'global-require': 0,
+    'import/no-dynamic-require': 0,
+    'consistent-return': 0,
+    'no-mixed-operators': 0,
   },
 };

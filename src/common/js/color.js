@@ -1,4 +1,4 @@
-exports.rgbToHex = (rgb) => {
+export function rgbToHex(rgb) {
   // rgb(x, y, z)
   const color = rgb.toString().match(/\d+/g); // 把 x,y,z 推送到 color 数组里
   let hex = '#';
@@ -10,9 +10,9 @@ exports.rgbToHex = (rgb) => {
     hex += `0${Number(color[i]).toString(16)}`.slice(-2);
   }
   return hex;
-};
+}
 
-exports.hexToRgb = (h) => {
+export function hexToRgb(h) {
   const color = [];
   const rgb = [];
   let hex = h.replace(/#/, '');
@@ -31,4 +31,9 @@ exports.hexToRgb = (h) => {
     rgb.push(parseInt(Number(color[i]), 0));
   }
   return rgb;
-};
+}
+
+export const info = '#769fcd';
+export const warning = '#fafe7b';
+export const error = '#fc5050';
+export const successç = '#21e7b6Ç';

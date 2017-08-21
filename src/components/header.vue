@@ -5,7 +5,7 @@
     </div>
     <div class="title">{{title}}</div>
     <div class="icon">
-      <i class="fa" :class="getIcon(icon)"></i>
+      <i class="fa" :class="icon"></i>
     </div>
   </div>
 </template>
@@ -28,9 +28,6 @@ export default {
     },
   },
   methods: {
-    getIcon(icon) {
-      return `fa-${icon}`;
-    },
   },
   created() {
 
@@ -46,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-@import '../../common/scss/variables.scss';
+@import '../common/scss/variables.scss';
 
 .header-wrapper {
   height: $header-heigh;
